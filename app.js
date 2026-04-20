@@ -12,8 +12,8 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
-// const dns = require("dns");
-// dns.setServers(["8.8.8.8","8.8.4.4"]);
+const dns = require("dns");
+dns.setServers(["8.8.8.8","8.8.4.4"]);
 
 const listingRouter = require("./Routes/listing.js");
 const reviewsRouter = require("./Routes/review.js");
@@ -28,7 +28,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
-//let mongourl = process.env.ATLAS_STRING;
+let mongourl = process.env.ATLAS_STRING;
 
 main()
   .then(() => {
@@ -39,25 +39,25 @@ main()
   });
 
 async function main() {
-  await mongoose.connect("mongodb://localhost:27017/wonderlust");
+  await mongoose.connect(mongourl);
 }
 //mongodb://localhost:27017/wonderlust
 app.engine("ejs", ejsMate);
 // here you write cons not hoisted
-// const store = MongoStore.create({
-//    //mongoUrl : mongourl,
-//    crypto : {
-//     secret : process.env.SECRET,
-//    },
-//    touchAfter : 24*3600,
-// });
+const store = MongoStore.create({
+   mongoUrl : mongourl,
+   crypto : {
+    secret : process.env.SECRET,
+   },
+   touchAfter : 24*3600,
+});
 
-// store.on("error",(err)=>{
-//   console.log("ERROR IN MONGO SESSUIONS",err);
-// }) ;
+store.on("error",(err)=>{
+  console.log("ERROR IN MONGO SESSIONS",err);
+}) ;
 
 const sessionOptions = {
-  //store,
+  store,
   secret: process.env.SECRET,
   resave: false,
   saveUninitialized: false,
