@@ -27,30 +27,35 @@
     <script src = "/javascript/script.js"></script>
     <script src="/javascript/map.js"></script>
      <script>
-
-      // Auto dismiss flash messages
+     // Auto dismiss after 3 seconds
   setTimeout(() => {
-    let alerts = document.querySelectorAll(".alert");
-    alerts.forEach(alert => {
-      let bsAlert = new bootstrap.Alert(alert);
-      bsAlert.close();
+    document.querySelectorAll(".alert").forEach(el => {
+      el.classList.remove("show");
+      setTimeout(() => el.remove(), 500);
     });
-  }, 3000); 
+  }, 3000);
 
-      let idleTimer;
+  // Manual close
+  document.querySelectorAll(".btn-close").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const alert = btn.closest(".alert");
+      alert.classList.remove("show");
+      setTimeout(() => alert.remove(), 500);
+    });
+  });
 
-      function resetTimer() {
-        clearTimeout(idleTimer);
-        idleTimer = setTimeout(() => {
-          window.location.href = "/logout";
-        }, 14 * 60 * 1000);
-      }
-
-      ["mousemove", "keydown", "click", "scroll", "touchstart"].forEach(event => {
-        document.addEventListener(event, resetTimer);
-      });
-
-      resetTimer();
+  // Idle logout timer
+  let idleTimer;
+  function resetTimer() {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => {
+      window.location.href = "/logout";
+    }, 14 * 60 * 1000);
+  }
+  ["mousemove", "keydown", "click", "scroll", "touchstart"].forEach(event => {
+    document.addEventListener(event, resetTimer);
+  });
+  resetTimer();
     </script>
 </body>
 </html>
