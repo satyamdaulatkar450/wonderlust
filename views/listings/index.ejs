@@ -34,6 +34,37 @@
   opacity: 1;
   border-bottom: 2px solid black;
 }
+@media (max-width: 768px) {
+  #filters {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-wrap: nowrap;
+  }
+
+  #filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter {
+    flex-shrink: 0;
+    margin-right: 0.8rem;
+    margin-top: 1rem;
+    min-width: 50px;
+  }
+
+  .filter p {
+    font-size: 0.65rem;
+  }
+
+  .tax-toggle {
+    margin-left: 1rem;
+    height: auto;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.75rem;
+    white-space: nowrap;
+  }
+}
 </style>
 <body>
    <!-- <h3>All Listing</h3> -->
