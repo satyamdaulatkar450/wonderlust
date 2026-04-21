@@ -38,11 +38,11 @@
       </div>
       <div class="navbar-nav ms-auto">
         <% if(!locals.currUser) {%>
+           <a class="nav-link" href="/listing/new">Add your home</a>
           <a class="nav-link" href="/signup"><b>Sign Up</b></a>
           <a class="nav-link" href="/login"><b>Log in</b></a>
        <% } %>
         <% if(locals.currUser) { %>
-          <a class="nav-link" href="/listing/new">Add your home</a>
           <a class="nav-link" href="/logout">Log Out</a>
         <%} %>
       </div>
