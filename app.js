@@ -67,6 +67,20 @@ const sessionOptions = {
   },
 };
 
+// app.get("/",(req,res)=>{
+//     res.send("this is the root");
+// })
+
+passport.use(new LocalStrategy(User.authenticate())); //static method of authenticate strategy
+passport.serializeUser(User.serializeUser()); // seriealize to serialize into the sesssion store the user reated information
+passport.deserializeUser(User.deserializeUser()); // deserialize session end remove user information
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use(passport.initialize());
+app.use(passport.session()); // same user to flip the page
+
 app.use((req, res, next) => {
   if (req.isAuthenticated()) {
     // Reset cookie expiry on every request (sliding session)
@@ -74,20 +88,6 @@ app.use((req, res, next) => {
   }
   next();
 });
-
-// app.get("/",(req,res)=>{
-//     res.send("this is the root");
-// })
-
-app.use(session(sessionOptions));
-app.use(flash());
-
-app.use(passport.initialize());
-app.use(passport.session()); // same user to flip the page
-passport.use(new LocalStrategy(User.authenticate())); //static method of authenticate strategy
-
-passport.serializeUser(User.serializeUser()); // seriealize to serialize into the sesssion store the user reated information
-passport.deserializeUser(User.deserializeUser()); // deserialize session end remove user information
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
