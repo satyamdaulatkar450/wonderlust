@@ -26,4 +26,20 @@
     <script src = "/javascript/script.js"></script>
     <script src="/javascript/map.js"></script>
 </body>
+ <script>
+      let idleTimer;
+
+      function resetTimer() {
+        clearTimeout(idleTimer);
+        idleTimer = setTimeout(() => {
+          window.location.href = "/logout";
+        }, 14 * 60 * 1000);
+      }
+
+      ["mousemove", "keydown", "click", "scroll", "touchstart"].forEach(event => {
+        document.addEventListener(event, resetTimer);
+      });
+
+      resetTimer();
+    </script>
 </html>
