@@ -67,6 +67,14 @@ const sessionOptions = {
   },
 };
 
+app.use((req, res, next) => {
+  if (req.isAuthenticated()) {
+    // Reset cookie expiry on every request (sliding session)
+    req.session.cookie.maxAge = 14 * 60 * 1000;
+  }
+  next();
+});
+
 // app.get("/",(req,res)=>{
 //     res.send("this is the root");
 // })
